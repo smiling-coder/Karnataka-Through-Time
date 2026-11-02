@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090d19">
+  <meta name="description" content="An immersive journey through Karnataka's history, heritage, culture and future.">
+  <title>Karnataka Through Time | Rajyotsava 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+
+  <header class="navbar">
+    <a class="brand" href="#home"><span>ಕರ್ನಾಟಕ</span><small>THROUGH TIME</small></a>
+    <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation">☰</button>
+    <nav id="nav">
+      <a href="#journey">Journey</a>
+      <a href="#heritage">Heritage</a>
+      <a href="#culture">Culture</a>
+      <a href="#future">Future</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div id="universe" aria-label="Animated 3D cosmic scene"></div>
+      <div class="hero-shade"></div>
+      <div class="hero-content">
+        <p class="eyebrow">01 NOVEMBER · KARNATAKA RAJYOTSAVA</p>
+        <h1>A LAND.<br>A LEGACY.<br><span>AN INFINITE FUTURE.</span></h1>
+        <p class="hero-copy">
+          From ancient kingdoms to the frontiers of space,
+          discover the extraordinary story of Karnataka.
+        </p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#journey">Explore the Journey ↗</a>
+          <a class="btn secondary" href="#heritage">Discover Heritage</a>
+        </div>
+        <p class="scroll-note">SCROLL TO TRAVEL THROUGH TIME ↓</p>
+      </div>
+      <div class="hero-caption">ಕರ್ನಾಟಕದ ಹೆಮ್ಮೆಯ ಪಯಣ</div>
+    </section>
+
+    <section class="intro section">
+      <p class="eyebrow">ONE STATE · COUNTLESS STORIES</p>
+      <h2>History made us.<br><span>Culture defines us.</span></h2>
+      <p>
+        Karnataka is a meeting place of magnificent architecture,
+        powerful dynasties, timeless art, rich languages and bold ideas.
+        Its story continues with every generation.
+      </p>
+    </section>
+
+    <section class="section timeline-section" id="journey">
+      <div class="section-heading">
+        <p class="eyebrow">THE HISTORICAL TIMELINE</p>
+        <h2>Through the Ages</h2>
+        <p>Choose an era to explore Karnataka's evolving legacy.</p>
+      </div>
+
+      <div class="timeline-layout">
+        <div class="timeline-list" id="timelineList">
+          <button class="era active" data-era="0"><span>01</span><span><b>Kadambas</b><small>c. 4th century CE</small></span><i>↗</i></button>
+          <button class="era" data-era="1"><span>02</span><span><b>Badami Chalukyas</b><small>c. 6th–8th century</small></span><i>↗</i></button>
+          <button class="era" data-era="2"><span>03</span><span><b>Rashtrakutas</b><small>c. 8th–10th century</small></span><i>↗</i></button>
+          <button class="era" data-era="3"><span>04</span><span><b>Hoysalas</b><small>c. 11th–14th century</small></span><i>↗</i></button>
+          <button class="era" data-era="4"><span>05</span><span><b>Vijayanagara</b><small>c. 14th–17th century</small></span><i>↗</i></button>
+          <button class="era" data-era="5"><span>06</span><span><b>Mysore Kingdom</b><small>Historic royal era</small></span><i>↗</i></button>
+          <button class="era" data-era="6"><span>07</span><span><b>State Unification</b><small>1956 · Mysore · 1973</small></span><i>↗</i></button>
+          <button class="era" data-era="7"><span>08</span><span><b>Modern Karnataka</b><small>Innovation and beyond</small></span><i>↗</i></button>
+        </div>
+
+        <article class="era-detail" id="eraDetail" aria-live="polite">
+          <div class="era-number">ERA 01 / 08</div>
+          <div class="era-art" id="eraArt">⌘</div>
+          <p class="eyebrow" id="eraDate">c. 4TH CENTURY CE</p>
+          <h3 id="eraTitle">The Kadambas</h3>
+          <p id="eraText">The Kadambas established an important early kingdom in the region, with Banavasi as their capital. They hold a significant place in Karnataka's political and literary history.</p>
+          <div class="era-fact"><span>✦</span><p id="eraFact">Banavasi was an important early centre of Kannada history.</p></div>
+          <div class="era-controls">
+            <button class="btn secondary" id="prevEra">← Previous</button>
+            <button class="btn primary" id="nextEra">Next Era →</button>
+          </div>
+        </article>
+      </div>
+      <p class="history-note">Historical periods are approximate. Dates and interpretations can vary across historical sources.</p>
+    </section>
+
+    <section class="section heritage-section" id="heritage">
+      <div class="section-heading">
+        <p class="eyebrow">TIMELESS MASTERPIECES</p>
+        <h2>Written in Stone</h2>
+        <p>Places where history still speaks.</p>
+      </div>
+      <div class="heritage-grid">
+        <article class="heritage-card">
+          <img src="https://images.unsplash.com/photo-1600100397608-f0102f1b8e7b?auto=format&fit=crop&w=1000&q=85" alt="Historic Indian stone architecture" loading="lazy">
+          <div class="card-body"><span>WORLD HERITAGE</span><h3>Hampi</h3><p>Explore the spectacular remains of the Vijayanagara Empire and its monumental architecture.</p></div>
+        </article>
+        <article class="heritage-card">
+          <img src="https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=1000&q=85" alt="Intricate Indian temple architecture" loading="lazy">
+          <div class="card-body"><span>HOYSALA ART</span><h3>Belur & Halebidu</h3><p>Discover remarkable stone carvings, detailed sculptures and extraordinary craftsmanship.</p></div>
+        </article>
+        <article class="heritage-card">
+          <img src="https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?auto=format&fit=crop&w=1000&q=85" alt="Illuminated Indian royal palace" loading="lazy">
+          <div class="card-body"><span>ROYAL GRANDEUR</span><h3>Mysuru Palace</h3><p>Celebrate the royal heritage and cultural traditions associated with Mysuru.</p></div>
+        </article>
+      </div>
+      <p class="history-note">Images are illustrative and may not depict the exact named monument. Replace with verified, licensed photographs for publication.</p>
+    </section>
+
+    <section class="culture-section section" id="culture">
+      <div class="section-heading">
+        <p class="eyebrow">A LIVING HERITAGE</p>
+        <h2>More Than a Place</h2>
+        <p>A culture that lives in its language, arts and people.</p>
+      </div>
+      <div class="culture-grid">
+        <article class="culture-card"><div>ಕ</div><h3>Kannada</h3><p>A classical language with a rich literary heritage and a living cultural voice.</p></article>
+        <article class="culture-card"><div>✺</div><h3>Yakshagana</h3><p>A vibrant performance tradition combining storytelling, music, dance and elaborate costumes.</p></article>
+        <article class="culture-card"><div>♛</div><h3>Mysuru Dasara</h3><p>A celebrated festival associated with Mysuru's royal traditions and cultural pageantry.</p></article>
+        <article class="culture-card"><div>✧</div><h3>Living Crafts</h3><p>From traditional weaving to woodwork, Karnataka's artisans keep creative traditions alive.</p></article>
+      </div>
+    </section>
+
+    <section class="future-section section" id="future">
+      <div class="future-orb">∞</div>
+      <p class="eyebrow">THE NEXT CHAPTER</p>
+      <h2>Rooted in Heritage.<br><span>Ready for Tomorrow.</span></h2>
+      <p>From technology and scientific research to entrepreneurship and space exploration, Karnataka continues to shape new possibilities.</p>
+      <div class="future-tags"><span>TECHNOLOGY</span><span>SCIENCE</span><span>INNOVATION</span><span>SPACE</span></div>
+    </section>
+
+    <section class="finale">
+      <div class="finale-content">
+        <p class="eyebrow">01 NOVEMBER · KARNATAKA RAJYOTSAVA</p>
+        <div class="flag-mark">ಕನ್ನಡ ✦ ಕರ್ನಾಟಕ</div>
+        <h2>Our Past. Our Pride.<br><span>Our Karnataka.</span></h2>
+        <p>ನಾಡು, ನುಡಿ, ಸಂಸ್ಕೃತಿ — ನಮ್ಮ ಹೆಮ್ಮೆ.</p>
+        <p class="finale-small">A tribute to the land, its people and the stories that unite us.</p>
+        <a href="#home" class="btn primary">Journey to the Beginning ↑</a>
+      </div>
+    </section>
+  </main>
+
+  <footer><span>KARNATAKA THROUGH TIME</span><span>Made with pride ♥ for Karnataka</span></footer>
+  <script type="module" src="script.js"></script>
+</body>
+    </html>
+                     
