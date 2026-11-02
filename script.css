@@ -1,0 +1,279 @@
+
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js";
+
+const universe = document.querySelector("#universe");
+
+if (universe) {
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x090d19, 0.018);
+
+  const camera = new THREE.PerspectiveCamera(
+    50, universe.clientWidth / universe.clientHeight, 0.1, 100
+  );
+  camera.position.set(0, 0, 9);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(universe.clientWidth, universe.clientHeight);
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  universe.appendChild(renderer.domElement);
+
+  scene.add(new THREE.AmbientLight(0x8aa8ff, 1.5));
+
+  const goldLight = new THREE.PointLight(0xffb95e, 45, 30);
+  goldLight.position.set(3, 3, 5);
+  scene.add(goldLight);
+
+  const blueLight = new THREE.PointLight(0x557dff, 35, 25);
+  blueLight.position.set(-4, -2, 1);
+  scene.add(blueLight);
+
+  const planet = new THREE.Mesh(
+    new THREE.SphereGeometry(1.7, 64, 64),
+    new THREE.MeshStandardMaterial({
+      color: 0x283f69,
+      metalness: 0.35,
+      roughness: 0.65,
+      emissive: 0x101b39,
+      emissiveIntensity: 0.8
+    })
+  );
+  planet.position.set(2.2, 0.1, -1.8);
+  scene.add(planet);
+
+  const atmosphere = new THREE.Mesh(
+    new THREE.SphereGeometry(1.78, 48, 48),
+    new THREE.MeshBasicMaterial({
+      color: 0x729cff,
+      transparent: true,
+      opacity: 0.09,
+      side: THREE.BackSide
+    })
+  );
+  atmosphere.position.copy(planet.position);
+  scene.add(atmosphere);
+
+  const ring = new THREE.Mesh(
+    new THREE.TorusGeometry(2.35, 0.012, 8, 180),
+    new THREE.MeshBasicMaterial({
+      color: 0xe8b765,
+      transparent: true,
+      opacity: 0.7
+    })
+  );
+  ring.position.copy(planet.position);
+  ring.rotation.set(1.05, 0.3, -0.3);
+  scene.add(ring);
+
+  const ring2 = new THREE.Mesh(
+    new THREE.TorusGeometry(2.65, 0.006, 8, 180),
+    new THREE.MeshBasicMaterial({
+      color: 0x729cff,
+      transparent: true,
+      opacity: 0.5
+    })
+  );
+  ring2.position.copy(planet.position);
+  ring2.rotation.set(0.9, -0.25, 0.4);
+  scene.add(ring2);
+
+  // Particle field: decorative stars, not scientific astronomical data.
+  const starCount = 1800;
+  const positions = new Float32Array(starCount * 3);
+
+  for (let i = 0; i < starCount; i++) {
+    positions[i * 3] = (Math.random() - 0.5) * 32;
+    positions[i * 3 + 1] = (Math.random() - 0.5) * 20;
+    positions[i * 3 + 2] = (Math.random() - 0.5) * 25 - 2;
+  }
+
+  const starGeometry = new THREE.BufferGeometry();
+  starGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+
+  const stars = new THREE.Points(
+    starGeometry,
+    new THREE.PointsMaterial({
+      color: 0xcbd9ff,
+      size: 0.025,
+      transparent: true,
+      opacity: 0.8
+    })
+  );
+  scene.add(stars);
+
+  let pointerX = 0;
+  let pointerY = 0;
+  let targetX = 0;
+  let targetY = 0;
+  let animationId;
+
+  window.addEventListener("pointermove", (event) => {
+    pointerX = (event.clientX / window.innerWidth - 0.5) * 0.45;
+    pointerY = (event.clientY / window.innerHeight - 0.5) * 0.25;
+  });
+
+  function animate() {
+    animationId = requestAnimationFrame(animate);
+
+    targetX += (pointerX - targetX) * 0.025;
+    targetY += (pointerY - targetY) * 0.025;
+
+    planet.rotation.y += 0.0018;
+    planet.rotation.x += 0.0003;
+    ring.rotation.z += 0.0005;
+    ring2.rotation.z -= 0.0003;
+    stars.rotation.y += 0.00008;
+
+    camera.position.x = targetX;
+    camera.position.y = -targetY;
+    camera.lookAt(0, 0, 0);
+
+    renderer.render(scene, camera);
+  }
+
+  animate();
+
+  window.addEventListener("resize", () => {
+    const width = universe.clientWidth;
+    const height = universe.clientHeight;
+    if (!width || !height) return;
+
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      cancelAnimationFrame(animationId);
+    } else {
+      cancelAnimationFrame(animationId);
+      animate();
+    }
+  });
+}
+
+// Mobile navigation
+const menuBtn = document.querySelector("#menuBtn");
+const nav = document.querySelector("#nav");
+
+menuBtn?.addEventListener("click", () => {
+  const open = nav.classList.toggle("open");
+  menuBtn.setAttribute("aria-expanded", String(open));
+});
+
+nav?.querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", () => nav.classList.remove("open"));
+});
+
+// Scroll progress
+const progress = document.querySelector("#progress");
+
+window.addEventListener("scroll", () => {
+  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+  const percent = scrollable > 0 ? window.scrollY / scrollable * 100 : 0;
+  progress.style.width = `${percent}%`;
+}, { passive: true });
+
+// Interactive history timeline
+const eras = [
+  {
+    date: "C. 4TH CENTURY CE",
+    title: "The Kadambas",
+    art: "⌘",
+    text: "The Kadambas established an important early kingdom in the region, with Banavasi as their capital. They hold a significant place in Karnataka's political and literary history.",
+    fact: "Banavasi was an important early centre of Kannada history."
+  },
+  {
+    date: "C. 6TH–8TH CENTURY",
+    title: "Badami Chalukyas",
+    art: "◇",
+    text: "The Badami Chalukyas built an influential kingdom and left a lasting architectural legacy at Badami, Aihole and Pattadakal.",
+    fact: "Pattadakal is recognised as a UNESCO World Heritage Site."
+  },
+  {
+    date: "C. 8TH–10TH CENTURY",
+    title: "The Rashtrakutas",
+    art: "✧",
+    text: "The Rashtrakutas became a major power in the Deccan and supported remarkable artistic and literary achievements.",
+    fact: "The Kailasa temple at Ellora is a celebrated Rashtrakuta-era monument."
+  },
+  {
+    date: "C. 11TH–14TH CENTURY",
+    title: "The Hoysalas",
+    art: "✺",
+    text: "Hoysala rulers developed a distinctive temple architecture renowned for elaborate carvings and intricate sculptural detail.",
+    fact: "Belur, Halebidu and Somnathapura preserve outstanding Hoysala artistry."
+  },
+  {
+    date: "C. 14TH–17TH CENTURY",
+    title: "Vijayanagara",
+    art: "♛",
+    text: "The Vijayanagara Empire made its capital at Hampi a major political, commercial and cultural centre in South India.",
+    fact: "The ruins of Hampi are a UNESCO World Heritage Site."
+  },
+  {
+    date: "ROYAL MYSORE",
+    title: "Mysore Kingdom",
+    art: "♔",
+    text: "The Wadiyar dynasty shaped Mysuru's royal and cultural traditions. The city became widely associated with palaces, music, art and Dasara celebrations.",
+    fact: "Mysuru Dasara remains one of Karnataka's best-known cultural celebrations."
+  },
+  {
+    date: "1956 · 1973",
+    title: "State Unification",
+    art: "ಕ",
+    text: "On 1 November 1956, Kannada-speaking regions were brought together into the reorganised Mysore State. It was renamed Karnataka in 1973.",
+    fact: "Karnataka Rajyotsava is celebrated on 1 November."
+  },
+  {
+    date: "TODAY AND TOMORROW",
+    title: "Modern Karnataka",
+    art: "∞",
+    text: "Karnataka contributes to India's technology, research, education, arts, manufacturing and entrepreneurial ecosystems.",
+    fact: "The next chapter is being written by innovators across the state."
+  }
+];
+
+let currentEra = 0;
+
+const eraButtons = [...document.querySelectorAll(".era")];
+const eraDate = document.querySelector("#eraDate");
+const eraTitle = document.querySelector("#eraTitle");
+const eraText = document.querySelector("#eraText");
+const eraFact = document.querySelector("#eraFact");
+const eraArt = document.querySelector("#eraArt");
+const eraNumber = document.querySelector(".era-number");
+
+function showEra(index) {
+  currentEra = (index + eras.length) % eras.length;
+  const era = eras[currentEra];
+
+  eraDate.textContent = era.date;
+  eraTitle.textContent = era.title;
+  eraText.textContent = era.text;
+  eraFact.textContent = era.fact;
+  eraArt.textContent = era.art;
+  eraNumber.textContent =
+    `ERA ${String(currentEra + 1).padStart(2, "0")} / ${String(eras.length).padStart(2, "0")}`;
+
+  eraButtons.forEach((button, i) => {
+    button.classList.toggle("active", i === currentEra);
+    button.setAttribute("aria-pressed", String(i === currentEra));
+  });
+}
+
+eraButtons.forEach((button) => {
+  button.addEventListener("click", () => showEra(Number(button.dataset.era)));
+});
+
+document.querySelector("#prevEra")?.addEventListener("click", () => {
+  showEra(currentEra - 1);
+});
+
+document.querySelector("#nextEra")?.addEventListener("click", () => {
+  showEra(currentEra + 1);
+});
+
+showEra(0);
